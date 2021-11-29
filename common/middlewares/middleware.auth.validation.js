@@ -6,11 +6,8 @@ const verifyToken = (req, res, next) => {
         const authorization = req.headers
         const isVerified = authJwt.verifyToken(authorization)
         if(isVerified) next()
-            
     } catch (error) {
-        res
-            .status(400)
-            .json( { "ok": false, "error": error.message } )
+        res.status(400).json( { "ok": false, "error": error.message } )
     } 
 }
 
@@ -22,11 +19,8 @@ const onlyAdmin = async (req, res, next) => {
 
         if(roles[0].name === 'user') throw new Error('Unauthorized') 
         else next()
-            
     } catch (error) {
-        res
-            .status(401)
-            .json( { "ok": false, "error": error.message } )
+        res.status(401).json( { "ok": false, "error": error.message } )
     } 
 }
 
