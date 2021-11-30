@@ -25,15 +25,15 @@ class MongodbQueries {
 
             const roles = await this.userQueries.rolesCreate()
             if(roles) console.log('role collections created')
-    
-            // if(await this.userQueries.userByEmail(body.email)) return
+            else return 
+            
             const user = await this.newUser(body, 'admin')
             const admin = await this.register(user)
-            if(admin) console.log('admin user created')
+            if(user) console.log('admin user created')
         
         } catch (error) {
             if(error.message === 'user not found') console.log('Admin No Exits')
-            else console.log(error.message)
+            if(error.message.includes('duplicate key')) console.log('Admin Exits')
         }
 
     }

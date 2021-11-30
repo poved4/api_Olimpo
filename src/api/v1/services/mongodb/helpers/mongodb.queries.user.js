@@ -4,8 +4,8 @@ class MongodbQueriesUser {
     modelUser = require('../models/mongodb.model.user')
 
     //Router Users
-    users = async () =>{
-        const users = await this.modelUser.find({}).populate("roles")
+    usersAll = async () =>{
+        const users = await this.modelUser.find().populate("roles")
         if(!users) throw new Error('no data')
         return users
     }

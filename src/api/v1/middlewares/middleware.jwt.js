@@ -24,7 +24,6 @@ class MiddlewareJwt {
             
             if(dbRoleId.equals(user.roles[0]._id)) next()
             else throw new Error('Unauthorized') 
-            next()
 
         } catch (error) {
             res.status(401).json( { "ok": false, "error": error.message } )

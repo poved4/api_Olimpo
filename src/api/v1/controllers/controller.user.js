@@ -56,10 +56,9 @@ class ControllerUser {
 
     usersAll = async (req, res) => {
         try {
-            console.log('Hello')
-            // const users = await this.queriesUser.users()
-            const users = true
-            res.status(200).json( { "ok": true, users } )
+
+            const users = await this.queriesUser.usersAll()
+            res.status(200).json( { "ok": true, users} )
             
         } catch (error) {
             res.status(500).json( { "ok": false, "error": error.message } )
