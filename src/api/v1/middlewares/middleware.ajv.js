@@ -1,26 +1,26 @@
-class AjvValidator {
+class MiddlewareAjv {
 
     //data transfer object
     dto = (req, res, next) => {
         try {
-            const schema = this.#getSchema(req.url)
-            this.#validator(schema, req.body)
+            const schema = this.getSchema(req.url)
+            this.validator(schema, req.body)
             next()
         } catch (error) {
             res.status(400).json( { "ok": false, "error": error.message } )
         }      
     }
 
-    #getSchema = (url) => {
+    getSchema = (url) => {
         const path = {
-            '/signUp/': require('../../services/ajv/schemas/ajv.schema.signUp'),
-            '/signIn/': require('../../services/ajv/schemas/ajv.schema.signIn')
+            '/signUp/': require('../services/ajv/schemas/ajv.schema.signUp'),
+            '/signIn/': require('../services/ajv/schemas/ajv.schema.signIn')
         }
 
         return path[url] || undefined
     }
 
-    #validator = (ajvValidate, body) => {
+    validator = (ajvValidate, body) => {
         if (!ajvValidate(body)) {
             const errors = ajvValidate.errors
             throw new Error(`${errors[0].message}`)
@@ -28,4 +28,4 @@ class AjvValidator {
     }
 }
 
-module.exports = new AjvValidator()
+module.exports = new MiddlewareAjv()

@@ -1,13 +1,14 @@
 const { Schema, model } = require('mongoose')
 
-const sessionSchema = new Schema({
+const schema = new Schema({
     id: String,
     token: String,
     user_id: String,
     is_active: Boolean,
-}, {
+}, 
+{
     timestamps: true,
     versionKey: false
 })
 
-module.exports = model('session', sessionSchema)
+module.exports = model('session', schema)

@@ -1,6 +1,6 @@
 //Essentials
 require('dotenv').config() 
-require('../services/mongodb/service.mongodb')
+require('../api/v1/services/mongodb/service.mongodb')
 
 //Packages
 const express = require('express')
@@ -18,6 +18,6 @@ server.use(express.json())
 server.use(express.urlencoded( {extended: true} ))
 
 //Router
-server.use("/api/v1/", require("./config.router"))
+server.use("/api", require("./config.router"))
 
 module.exports = server
