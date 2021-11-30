@@ -1,15 +1,17 @@
 const router = require('express').Router()
-const controller = require("./user.controller")
-const { authJwt } = require("../../common/middlewares")
+const { verifyToken, verifyAdminRol } = require("../../common/middlewares/middleware.jwt")
+const { getUsers, getUserMe, getUserById, updateUserById, removeUserById } = require("./user.controller")
 
 router.route('/')
-  .all(authJwt.verifyToken)
-  .get(controller.getUsers)
+  .get(verifyToken, verifyAdminRol, getUsers)
+
+router.route('/me')
+  .get(verifyToken, getUserMe)
   
 router.route('/:id')
-  .all(authJwt.verifyToken)
-  .get(controller.getUserById)
-  .put(controller.updateUserById)
-  .delete(controller.removeUserById)
+  .all(verifyToken, verifyAdminRol)
+  .get(getUserById)
+  .put(updateUserById)
+  .delete(removeUserById)
 
 module.exports = router

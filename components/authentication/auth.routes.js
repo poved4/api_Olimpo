@@ -1,10 +1,10 @@
 const router = require("express").Router()
-const controller = require("./auth.controller")
-const { authJwt } = require("../../common/middlewares")
+const { signUp, signIn, logOut } = require("./auth.controllers")
+const { dto } = require("../../common/middlewares/middleware.ajv")
 
 router
-    .post('/signUp', controller.signUp) 
-    .post('/signIn', controller.signIn) 
-    .post('/logOut', controller.logOut) 
+    .post('/signUp', dto, signUp) 
+    .post('/signIn', dto, signIn) 
+    .post('/logOut', logOut) 
   
 module.exports = router

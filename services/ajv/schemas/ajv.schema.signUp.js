@@ -1,10 +1,10 @@
-const ajvInstance = require('./ajv.instance')
+const ajvInstance = require('../service.ajv.instance')
 
-const signUpSchema = {
+const schema = {
     type: "object",
 
     properties: {
-        username: { type: "integer" },
+        username: { type: "string" },
         email: { type: "string", format: "email" },
         password: { type: "string", format: "password" }
     },
@@ -13,4 +13,4 @@ const signUpSchema = {
     additionalProperties: false
 }
   
-module.exports = ajvInstance.compile(signUpSchema)
+module.exports = ajvInstance.compile(schema)

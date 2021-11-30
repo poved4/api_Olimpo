@@ -1,7 +1,19 @@
 const userSchemaMongo = require('../../services/mongodb/models/model.user')
 const rolesSchemaMongo = require('../../services/mongodb/models/model.rol')
+const jwt = require('../../services/jwt/service.jwt')
 
 class UserController {
+
+    getUserMe = async (req, res) => {
+        try {
+            const _id = jwt.decodeToken(req.headers)
+            const user = await userSchemaMongo.findById(_id).populate('roles')
+            res.status(200).json( { "ok": true, user } )
+
+        } catch (error) {
+            res.status(500).json( { "ok": false, "error": error.message } )
+        } 
+    }
 
     getUserById = async (req, res) => {
         try {

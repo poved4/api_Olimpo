@@ -1,6 +1,5 @@
-const jwt = require("jsonwebtoken")
-
 class authJwt {
+    #jwt = require("jsonwebtoken")
     #jwtSign = process.env.JWT_SIGN
     #jwtExpires = process.env.JWT_EXPIRESIN
 
@@ -12,7 +11,7 @@ class authJwt {
     }
     
     generateToken = (_id) => {
-        const token = jwt.sign(
+        const token = this.#jwt.sign(
             { _id }, this.#jwtSign, 
             { expiresIn: this.#jwtExpires }
         )
@@ -23,7 +22,7 @@ class authJwt {
     
     verifyToken = (header) => {
         const token = this.#getToken(header)
-        return jwt.verify(token, this.#jwtSign, (error) => {
+        return this.#jwt.verify(token, this.#jwtSign, (error) => {
             if (error.name === 'JsonWebTokenError') throw new Error(`${error.message}`) 
             else return true
         }) 
@@ -31,7 +30,7 @@ class authJwt {
     
     decodeToken = (header) => {
         const token = this.#getToken(header)
-        return jwt.decode(token, this.#jwtSign, (error) => {
+        return this.#jwt.decode(token, this.#jwtSign, (error) => {
             if (error.name === 'JsonWebTokenError') throw new Error(`${error.message}`) 
             else return true
         })

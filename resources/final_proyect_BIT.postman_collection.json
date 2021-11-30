@@ -18,7 +18,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"testOne\",\r\n    \"email\":    \"testOne@gmail.com\",\r\n    \"password\": \"@user2911@\"\r\n}",
+							"raw": "{\r\n    \"username\": \"other\",\r\n    \"email\":    \"other@gmail.com\",\r\n    \"password\": \"@user2911@\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -48,8 +48,8 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"let response = pm.response.json();\r",
-									"pm.environment.set(\"token\", response.token);"
+									"const response = pm.response.json().token || null\r",
+									"pm.environment.set(\"token\", response)"
 								],
 								"type": "text/javascript"
 							}
@@ -87,7 +87,7 @@
 					"response": []
 				},
 				{
-					"name": "delete user",
+					"name": "logOut",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -127,10 +127,19 @@
 			"name": "users",
 			"item": [
 				{
-					"name": "get users",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "get all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json() || null\r",
+									"pm.environment.set(\"id\", response.users[0]._id)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -144,15 +153,6 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
 							"raw": "{{url}}/api/v1/user/",
 							"host": [
@@ -169,10 +169,7 @@
 					"response": []
 				},
 				{
-					"name": "get user by id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "get me user",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -186,17 +183,8 @@
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "text"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{url}}/api/v1/user/61900387207f911eb2e898d6",
+							"raw": "{{url}}/api/v1/user/me",
 							"host": [
 								"{{url}}"
 							],
@@ -204,7 +192,37 @@
 								"api",
 								"v1",
 								"user",
-								"61900387207f911eb2e898d6"
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/user/{{id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"{{id}}"
 							]
 						}
 					},
@@ -225,17 +243,8 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "{{url}}/api/v1/user/61900387207f911eb2e898d6",
+							"raw": "{{url}}/api/v1/user/{{id}}",
 							"host": [
 								"{{url}}"
 							],
@@ -243,7 +252,7 @@
 								"api",
 								"v1",
 								"user",
-								"61900387207f911eb2e898d6"
+								"{{id}}"
 							]
 						}
 					},
@@ -279,7 +288,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/api/v1/user/61900387207f911eb2e898d6",
+					"raw": "{{url}}/api/v1/user/me",
 					"host": [
 						"{{url}}"
 					],
@@ -287,7 +296,7 @@
 						"api",
 						"v1",
 						"user",
-						"61900387207f911eb2e898d6"
+						"me"
 					]
 				}
 			},
