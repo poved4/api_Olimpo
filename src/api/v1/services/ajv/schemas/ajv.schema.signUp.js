@@ -12,5 +12,14 @@ const schema = {
     required: ["username", "email", "password"],
     additionalProperties: false
 }
+
+//password
+///^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/
+
+
+//letter
+///^[A-Za-z]+$/
+
+//pattern: "/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/"
   
 module.exports = ajvInstance.compile(schema)

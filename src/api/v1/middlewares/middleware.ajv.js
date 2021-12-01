@@ -8,13 +8,14 @@ class MiddlewareAjv {
             next()
         } catch (error) {
             res.status(400).json( { "ok": false, "error": error.message } )
-        }      
+        }
     }
 
     getSchema = (url) => {
         const path = {
             '/signUp/': require('../services/ajv/schemas/ajv.schema.signUp'),
-            '/signIn/': require('../services/ajv/schemas/ajv.schema.signIn')
+            '/signIn/': require('../services/ajv/schemas/ajv.schema.signIn'),
+            '/':   require('../services/ajv/schemas/ajv.schema.dish')
         }
 
         return path[url] || undefined
