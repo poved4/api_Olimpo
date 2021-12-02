@@ -28,8 +28,8 @@ class ControllerAuth {
     } 
     
     logOut = async (req, res) => {
-        // const log = await this.mongodb._logout()
-        res.status(200).json({"ok": true, token})
+        const log = await this.mongodb.logout()
+        res.status(200).json({"ok": true })
     } 
 }
 

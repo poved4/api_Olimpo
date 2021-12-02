@@ -18,6 +18,11 @@ class MongodbQueries {
         const user = await this.userQueries.userModel(body)
         return user
     }
+
+    //Sing Off
+    logout = async () => {
+        return true
+    }
     
     /* MongoDB Init */
     dbInit = async (body) => {
