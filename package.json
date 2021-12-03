@@ -6,7 +6,8 @@
   "scripts": {
     "prestart": "clear",
     "start": "node ./src/app.js",
-    "dev": "nodemon ./src/app.js"
+    "dev": "nodemon ./src/app.js",
+    "db": "cd c: & mongod"
   },
   "author": "Juan Poveda",
   "license": "ISC",

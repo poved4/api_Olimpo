@@ -27,11 +27,22 @@ class MongodbQueries {
     /* MongoDB Init */
     dbInit = async (body) => {
         try {
-
+            
+            // Create Roles
             const roles = await this.userQueries.rolesCreate()
             if(roles) console.log('role collections created')
-            else return 
-            
+
+            // Create Dishes
+            const dishModel = require('../models/mongodb.model.dish')
+            if(await dishModel.estimatedDocumentCount() === 0) {
+                
+                const dataInsert = require('../mongo.deafultData').dishes
+                const dishes = await dishModel.insertMany(dataInsert)
+                console.log('Dishes Created')
+                
+            }
+
+            // create Admin
             const user = await this.newUser(body, 'admin')
             const admin = await this.register(user)
             if(user) console.log('admin user created')
