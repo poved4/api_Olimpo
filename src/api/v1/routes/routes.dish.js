@@ -5,7 +5,8 @@ const auth = require("../middlewares/middleware.jwt")
 const { dto } = require("../middlewares/middleware.ajv")
 
 router.route('/')
-    .get(auth.verifyToken, ctrl.dishesAll) 
+    .get(ctrl.dishesAll) 
+    // .get(auth.verifyToken, ctrl.dishesAll) 
     .post(auth.verifyToken, auth.verifyAdminRol, dto, ctrl.dishCreate) 
 
 router.get('/:id', auth.verifyToken, ctrl.dishById) 

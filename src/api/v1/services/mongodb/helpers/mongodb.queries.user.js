@@ -5,7 +5,8 @@ class MongodbQueriesUser {
 
     //Router Users
     usersAll = async () =>{
-        const users = await this.modelUser.find().populate("roles")
+        console.log('from userAll')
+        const users = await this.modelUser.find({}, { password : 0 }).populate("roles")
         if(!users) throw new Error('no data')
         return users
     }
