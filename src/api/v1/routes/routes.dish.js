@@ -5,14 +5,12 @@ const auth = require("../middlewares/middleware.jwt")
 const { dto } = require("../middlewares/middleware.ajv")
 
 router.route('/')
-    .get(ctrl.dishesAll) 
-    // .get(auth.verifyToken, ctrl.dishesAll) 
+    .get(auth.verifyToken, ctrl.dishesAll) 
     .post(auth.verifyToken, auth.verifyAdminRol, dto, ctrl.dishCreate) 
 
 router.get('/:id', auth.verifyToken, ctrl.dishById) 
 
-router
-    .route('/:id')
+router.route('/:id')
     .all(auth.verifyToken, auth.verifyAdminRol)
     .put(ctrl.dishUpdateById) 
     .delete(ctrl.dishRemoveById) 
